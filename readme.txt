@@ -5,7 +5,7 @@ Tags: events, calendar
 Requires at least: 6.1.0
 Tested up to: 6.4.1
 Requires PHP: 7.4
-Stable tag: 1.0.0-dev
+Stable tag: 1.0.0
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,6 +30,10 @@ Please visit our [extension library](https://theeventscalendar.com/extensions/) 
 We're always interested in your feedback and our [Help Desk](https://support.theeventscalendar.com/) are the best place to flag any issues. Do note, however, that the degree of support we provide for extensions like this one tends to be very limited.
 
 == Changelog ==
+
+= [1.0.0] 2023-11-20 =
+
+* Initial release
 
 = [1.0.0-dev] 2023-11-16 =
 
