@@ -211,14 +211,11 @@ class Settings {
 	 * TODO: Remove this method and the corresponding hook in `__construct()` if you don't want to remove any settings.
 	 */
 	public function remove_settings() {
-		// Remove "Enable Google Maps" checkbox
-		$this->settings_helper->remove_field( 'embedGoogleMaps', 'general' );
+		// Remove reCAPTCHA v2 info
+		$this->settings_helper->remove_field( 'recaptcha-info', 'addons' );
 
-		// Remove "Map view search distance limit" (default of 25)
-		$this->settings_helper->remove_field( 'geoloc_default_geofence', 'general' );
-
-		// Remove "Google Maps default zoom level" (0-21, default of 10)
-		$this->settings_helper->remove_field( 'embedGoogleMapsZoom', 'general' );
+		// Remove reCAPTCHA v2 Secret Key
+		$this->settings_helper->remove_field( 'recaptchaPrivateKey', 'addons' );
 	}
 
 	/**
@@ -234,24 +231,13 @@ class Settings {
 				'type' => 'html',
 				'html' => $this->recaptcha_v3_settings_intro_text(),
 			],
-			// TODO: Settings heading end.
-			'recaptcha_v3_site_key' => [ // TODO: Change setting.
-				'type'            => 'text',
-				'label'           => esc_html__( 'Site Key', 'tec-labs-ce-recaptcha-v3' ),
-				'tooltip'         => sprintf( esc_html__( 'Get your Site Key at %s.', 'tec-labs-ce-recaptcha-v3' ), '<a href="https://www.Google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>' ),
-				'validation_type' => 'html',
-				'default'         => '',
-				'can_be_empty'    => true,
-				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,
-				'size'            => 'large',
-			],
 		];
 
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
 			'addons',
-			'recaptchaPrivateKey',
-			false
+			'recaptchaPublicKey',
+			true
 		);
 	}
 
@@ -283,8 +269,7 @@ class Settings {
 	 * @return string
 	 */
 	private function recaptcha_v3_settings_intro_text() {
-		$result = '<h3>' . esc_html_x( 'reCAPTCHA v3 API Key', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
-		$result .= '<div style="margin-left: 20px;">';
+		$result = '<div style="margin-left: 20px;">';
 		$result .= '<p>';
 		$result .= esc_html_x( 'Provide reCAPTCHA v3 API key to enable reCAPTCHA on your Community Events form.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
 		$result .= '</p>';
