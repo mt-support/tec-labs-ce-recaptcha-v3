@@ -70,13 +70,11 @@ class Plugin extends Service_Provider {
 	 * @since 1.0.0
 	 *
 	 * @var Settings
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private $settings;
 
 	/**
-	 * Setup the Extension's properties.
+	 * Set up the Extension's properties.
 	 *
 	 * This always executes even if the required plugins are not present.
 	 *
@@ -100,7 +98,6 @@ class Plugin extends Service_Provider {
 		}
 
 		// Do the settings.
-		// TODO: Remove if not using settings
 		$this->get_settings();
 
 		// Start binds.
@@ -121,7 +118,6 @@ class Plugin extends Service_Provider {
 	 * @since 1.0.0
 	 */
 	function maybe_do_recaptcha_v3() {
-		//$recaptcha_key = new tribe( 'community.main' )->getOption( 'recaptchaPublicKey', '' );
 		$ce_options = \Tribe__Events__Community__Main::getOptions();
 		$recaptcha_key = $ce_options['recaptchaPublicKey'];
 
@@ -233,8 +229,6 @@ class Plugin extends Service_Provider {
 	 * @return string
      *
 	 * @see \Tribe\Extensions\CeRecaptchaV3\Settings::set_options_prefix()
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private function get_options_prefix() {
 		return (string) str_replace( '-', '_', 'tec-labs-ce-recaptcha-v3' );
@@ -244,8 +238,6 @@ class Plugin extends Service_Provider {
 	 * Get Settings instance.
 	 *
 	 * @return Settings
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private function get_settings() {
 		if ( empty( $this->settings ) ) {
@@ -259,8 +251,6 @@ class Plugin extends Service_Provider {
 	 * Get all of this extension's options.
 	 *
 	 * @return array
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	public function get_all_options() {
 		$settings = $this->get_settings();
@@ -275,8 +265,6 @@ class Plugin extends Service_Provider {
 	 * @param string $default
 	 *
 	 * @return array
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	public function get_option( $option, $default = '' ) {
 		$settings = $this->get_settings();

@@ -12,8 +12,6 @@ use Tribe__Settings_Manager;
 
 /**
  * Do the Settings.
- *
- * TODO: Delete file if not using settings
  */
 class Settings {
 
@@ -35,8 +33,6 @@ class Settings {
 
 	/**
 	 * Settings constructor.
-	 *
-	 * TODO: Update this entire class for your needs, or remove the entire `src` directory this file is in and do not load it in the main plugin file.
 	 *
 	 * @param string $options_prefix Recommended: the plugin text domain, with hyphens converted to underscores.
 	 */
@@ -207,8 +203,6 @@ class Settings {
 	/**
 	 * Here is an example of removing settings from Events > Settings > General tab > "Map Settings" section
 	 * that are specific to Google Maps.
-	 *
-	 * TODO: Remove this method and the corresponding hook in `__construct()` if you don't want to remove any settings.
 	 */
 	public function remove_settings() {
 		// Remove reCAPTCHA v2 info
@@ -221,13 +215,10 @@ class Settings {
 	/**
 	 * Adds a new section of fields to Events > Settings > General tab, appearing after the "Map Settings" section
 	 * and before the "Miscellaneous Settings" section.
-	 *
-	 * TODO: Move the setting to where you want and update this docblock. If you like it here, just delete this TODO.
 	 */
 	public function add_settings() {
 		$fields = [
-			// TODO: Settings heading start. Remove this element if not needed. Also remove the corresponding `get_example_intro_text()` method below.
-			'Example'   => [
+			'Intro'   => [
 				'type' => 'html',
 				'html' => $this->recaptcha_v3_settings_intro_text(),
 			],
@@ -263,8 +254,6 @@ class Settings {
 
 	/**
 	 * Here is an example of getting some HTML for the Settings Header.
-	 *
-	 * TODO: Delete this method if you do not need a heading for your settings. Also remove the corresponding element in the the $fields array in the `add_settings()` method above.
 	 *
 	 * @return string
 	 */
