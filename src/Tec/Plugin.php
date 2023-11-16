@@ -115,7 +115,10 @@ class Plugin extends Service_Provider {
 
 	/**
 	 * Replace reCAPTCHA v2 with v3 if there is a license key set.
+	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	function maybe_do_recaptcha_v3() {
 		//$recaptcha_key = new tribe( 'community.main' )->getOption( 'recaptchaPublicKey', '' );
@@ -138,6 +141,8 @@ class Plugin extends Service_Provider {
 	 * @param array $paths The template paths.
 	 *
 	 * @return array The new template paths.
+	 *
+	 * @since 1.0.0
 	 */
 	function template_base_paths( array $paths ): array {
 		$slug = "tec-labs-" . PUE::get_slug();
@@ -156,6 +161,8 @@ class Plugin extends Service_Provider {
 	 * @param string|null $name
 	 *
 	 * @return string
+	 *
+	 * @since 1.0.0
 	 */
 	function custom_templates( string $file, string $template, string $slug, ?string $name ): string {
 		$custom_folder = "src/views";
