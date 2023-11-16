@@ -118,7 +118,9 @@ class Plugin extends Service_Provider {
 	 * @return void
 	 */
 	function maybe_do_recaptcha_v3() {
-		$recaptcha_key = tribe( 'community.main' )->getOption( 'recaptchaPublicKey', '' );
+		//$recaptcha_key = new tribe( 'community.main' )->getOption( 'recaptchaPublicKey', '' );
+		$ce_options = \Tribe__Events__Community__Main::getOptions();
+		$recaptcha_key = $ce_options['recaptchaPublicKey'];
 
 		if ( $recaptcha_key != '' ) {
 			// Template override for the main templates (in src/views/community).
@@ -128,7 +130,7 @@ class Plugin extends Service_Provider {
 			add_filter( 'tribe_get_template_part_path', [ $this, 'custom_templates' ], 10, 4 );
 		}
 	}
-	
+
 	/**
 	 * Add template override location for the main template files.
 	 * (Files in src/views/community.)
