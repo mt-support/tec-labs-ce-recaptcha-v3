@@ -105,12 +105,59 @@ class Plugin extends Service_Provider {
 
 		// Start binds.
 
+		// Template override for the main templates (in src/views/community).
+		add_filter( 'tribe_events_template_paths', [ $this, 'template_base_paths' ] );
 
+		// Template override for module templates (under src/views/community).
+		add_filter( 'tribe_get_template_part_path', [ $this, 'custom_templates' ], 10, 4 );
 
 		// End binds.
 
 		$this->container->register( Hooks::class );
 		$this->container->register( Assets::class );
+	}
+
+	/**
+	 * Add template override location for the main template files.
+	 * (Files in src/views/community.)
+	 *
+	 * @param array $paths The template paths.
+	 *
+	 * @return array The new template paths.
+	 */
+	function template_base_paths( array $paths ): array {
+		$slug = "tec-labs-" . PUE::get_slug();
+		$paths[$slug] = trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) );
+
+		return $paths;
+	}
+
+	/**
+	 * Add template override location for template parts.
+	 * (Files under src/views/community.)
+	 *
+	 * @param string $file The template file name with full server path.
+	 * @param string $template The template file name with the default override path. (E.g. community/modules/template.php)
+	 * @param string $slug The template slug. (Same as file name but without extension.)
+	 * @param string|null $name
+	 *
+	 * @return string
+	 */
+	function custom_templates( string $file, string $template, string $slug, ?string $name ): string {
+		$custom_folder = "src/views";
+
+		$plugin_path = implode( "", array_merge(
+			(array) trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) ),
+			(array) $custom_folder,
+		) );
+
+		$new_file = $plugin_path . "/" . $template;
+
+		if ( file_exists( $new_file ) ) {
+			return $new_file;
+		}
+
+		return $file;
 	}
 
 	/**
