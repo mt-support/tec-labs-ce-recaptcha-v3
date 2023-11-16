@@ -131,6 +131,8 @@ class Plugin extends Service_Provider {
 
 			// Template override for module templates (under src/views/community).
 			add_filter( 'tribe_get_template_part_path', [ $this, 'custom_templates' ], 10, 4 );
+
+			add_action( 'wp_head', [ $this, 'add_recaptcha_scripts' ] );
 		}
 	}
 
@@ -179,6 +181,22 @@ class Plugin extends Service_Provider {
 		}
 
 		return $file;
+	}
+
+	/**
+	 * Add recaptcha scripts to the head.
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see https://developers.google.com/recaptcha/docs/v3
+	 */
+	function add_recaptcha_scripts() {
+		if ( tribe_context()->get('view') == "community_event_page" ) {
+			echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+			echo '<script>function onSubmit(token) { document.getElementById("tec_ce_submission_form").submit(); }</script>';
+		}
 	}
 
 	/**
