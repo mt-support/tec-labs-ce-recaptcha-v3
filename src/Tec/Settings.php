@@ -232,22 +232,26 @@ class Settings {
 			// TODO: Settings heading start. Remove this element if not needed. Also remove the corresponding `get_example_intro_text()` method below.
 			'Example'   => [
 				'type' => 'html',
-				'html' => $this->get_example_intro_text(),
+				'html' => $this->recaptcha_v3_settings_intro_text(),
 			],
 			// TODO: Settings heading end.
-			'a_setting' => [ // TODO: Change setting.
+			'recaptcha_v3_site_key' => [ // TODO: Change setting.
 				'type'            => 'text',
-				'label'           => esc_html__( 'Example setting', 'tec-labs-ce-recaptcha-v3' ),
-				'tooltip'         => sprintf( esc_html__( 'Example setting description. Enter your custom URL, including "http://" or "https://", for example %s.', 'tec-labs-ce-recaptcha-v3' ), '<code>https://demo.theeventscalendar.com/</code>' ),
+				'label'           => esc_html__( 'Site Key', 'tec-labs-ce-recaptcha-v3' ),
+				'tooltip'         => sprintf( esc_html__( 'Get your Site Key at %s.', 'tec-labs-ce-recaptcha-v3' ), '<a href="https://www.Google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>' ),
 				'validation_type' => 'html',
+				'default'         => '',
+				'can_be_empty'    => true,
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,
+				'size'            => 'large',
 			],
 		];
 
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
-			'general',
-			'tribeEventsMiscellaneousTitle',
-			true
+			'addons',
+			'recaptchaPrivateKey',
+			false
 		);
 	}
 
@@ -278,11 +282,11 @@ class Settings {
 	 *
 	 * @return string
 	 */
-	private function get_example_intro_text() {
-		$result = '<h3>' . esc_html_x( 'Example Extension Setup', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
+	private function recaptcha_v3_settings_intro_text() {
+		$result = '<h3>' . esc_html_x( 'reCAPTCHA v3 API Key', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
 		$result .= '<div style="margin-left: 20px;">';
 		$result .= '<p>';
-		$result .= esc_html_x( 'Some text here about this settings section.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
+		$result .= esc_html_x( 'Provide reCAPTCHA v3 API key to enable reCAPTCHA on your Community Events form.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
 		$result .= '</p>';
 		$result .= '</div>';
 
