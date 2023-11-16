@@ -3,8 +3,8 @@
  * Plugin Name:       The Events Calendar: Community Events Extension: reCAPTCHA v3
  * Plugin URI:        https://theeventscalendar.com/extensions/recaptcha-v3-for-community-events
  * GitHub Plugin URI: https://github.com/mt-support/tec-labs-ce-recaptcha-v3
- * Description:       Add reCAPTCHA v3 support for Community Events
- * Version:           1.0.0
+ * Description:       Add reCAPTCHA v3 support for Community Events.
+ * Version:           1.0.0-dev
  * Author:            The Events Calendar
  * Author URI:        https://evnt.is/1971
  * License:           GPL version 3 or any later version

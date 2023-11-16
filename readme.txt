@@ -2,20 +2,14 @@
 Contributors: theeventscalendar
 Donate link: https://evnt.is/29
 Tags: events, calendar
-Requires at least: 4.9
-Tested up to: 5.7
-Requires PHP: 5.6
-Stable tag: 1.0.0
+Requires at least: 6.1.0
+Tested up to: 6.4.1
+Requires PHP: 7.4
+Stable tag: 1.0.0-dev
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Add reCAPTCHA v3 support for Community Events
-
-== Description ==
-
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and Markdown parsed.
+Add reCAPTCHA v3 support for Community Events.
 
 == Installation ==
 
@@ -37,6 +31,6 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 == Changelog ==
 
-= [1.0.0] YYYY-MM-DD =
+= [1.0.0-dev] 2023-11-16 =
 
-* Initial release
+* Beta release
