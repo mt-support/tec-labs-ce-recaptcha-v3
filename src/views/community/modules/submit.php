@@ -29,6 +29,8 @@ if ( tribe_is_event( $post_id ) ) {
 	$button_label = sprintf( __( 'Submit %s', 'tribe-events-community' ), $events_label_singular );
 }
 $button_label = apply_filters( 'tribe_community_event_edit_button_label', $button_label );
+
+$recaptcha_theme = tribe( 'community.main' )->getOption( 'tec_labs_ce_recaptcha_v3_theme', 'light' );
 ?>
 
 <div class="tribe-events-community-footer">
@@ -48,6 +50,7 @@ $button_label = apply_filters( 'tribe_community_event_edit_button_label', $butto
 		data-sitekey="<?php echo $recaptcha_key; ?>"
 		data-callback="onSubmit"
 		data-action="submit"
+		data-theme="<?php echo $recaptcha_theme; ?>"
 	/>
 
 	<?php

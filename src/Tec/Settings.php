@@ -217,6 +217,20 @@ class Settings {
 				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,  // We're using the Community Events entry, instead of the default TEC.
 				'size'            => 'large',
 			],
+			'theme' => [
+				'type'            => 'dropdown',
+				'label'           => esc_html__( 'Theme', 'tec-labs-ce-recaptcha-v3' ),
+				'tooltip'         => esc_html__( 'The color theme of the widget.', 'tec-labs-ce-recaptcha-v3' ),
+				'default'         => 'light',
+				'validation_type' => 'options',
+				'size'            => 'small',
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,  // We're using the Community Events entry, instead of the default TEC.
+				'options'         => [
+					'light' => esc_html__( 'Light', 'tec-labs-ce-recaptcha-v3' ),
+					'dark'  => esc_html__( 'Dark', 'tec-labs-ce-recaptcha-v3' ),
+				],
+			],
+
 		];
 
 		$this->settings_helper->add_fields(
