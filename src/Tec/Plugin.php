@@ -122,7 +122,7 @@ class Plugin extends Service_Provider {
 	 */
 	function maybe_do_recaptcha_v3() {
 		$ce_options = \Tribe__Events__Community__Main::getOptions();
-		$recaptcha_key = $ce_options['recaptchaPublicKey'];
+		$recaptcha_key = $ce_options['tec_labs_ce_recaptcha_v3_site_key'];
 
 		if ( $recaptcha_key != '' ) {
 			// Template override for the main templates (in src/views/community).
