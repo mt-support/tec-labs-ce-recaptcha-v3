@@ -102,6 +102,9 @@ class Plugin extends Service_Provider {
 
 		// Start binds.
 
+		// Remove reCAPTCHA v2
+		add_filter('tribe_community_events_captcha_plugin', '__return_null' );
+
 		$this->maybe_do_recaptcha_v3();
 
 		// End binds.
@@ -122,15 +125,13 @@ class Plugin extends Service_Provider {
 		$recaptcha_key = $ce_options['recaptchaPublicKey'];
 
 		if ( $recaptcha_key != '' ) {
-			// Remove reCAPTCHA v2
-			add_filter('tribe_community_events_captcha_plugin', '__return_null' );
-
 			// Template override for the main templates (in src/views/community).
 			add_filter( 'tribe_events_template_paths', [ $this, 'template_base_paths' ] );
 
 			// Template override for module templates (under src/views/community).
 			add_filter( 'tribe_get_template_part_path', [ $this, 'custom_templates' ], 10, 4 );
 
+			// Add scripts needed for v3.
 			add_action( 'wp_head', [ $this, 'add_recaptcha_scripts' ] );
 		}
 	}
