@@ -122,6 +122,9 @@ class Plugin extends Service_Provider {
 		$recaptcha_key = $ce_options['recaptchaPublicKey'];
 
 		if ( $recaptcha_key != '' ) {
+			// Remove reCAPTCHA v2
+			add_filter('tribe_community_events_captcha_plugin', '__return_null' );
+
 			// Template override for the main templates (in src/views/community).
 			add_filter( 'tribe_events_template_paths', [ $this, 'template_base_paths' ] );
 
