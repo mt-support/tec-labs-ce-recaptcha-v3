@@ -122,7 +122,8 @@ class Plugin extends Service_Provider {
 	 */
 	function maybe_do_recaptcha_v3() {
 		$ce_options = \Tribe__Events__Community__Main::getOptions();
-		$recaptcha_key = $ce_options['tec_labs_ce_recaptcha_v3_site_key'];
+		$option_key = $this->get_options_prefix() . '_site_key';
+		$recaptcha_key = $ce_options[$option_key];
 
 		if ( $recaptcha_key != '' ) {
 			// Template override for the main templates (in src/views/community).
@@ -251,28 +252,4 @@ class Plugin extends Service_Provider {
 		return $this->settings;
 	}
 
-	/**
-	 * Get all of this extension's options.
-	 *
-	 * @return array
-	 */
-	public function get_all_options() {
-		$settings = $this->get_settings();
-
-		return $settings->get_all_options();
-	}
-
-	/**
-	 * Get a specific extension option.
-	 *
-	 * @param $option
-	 * @param string $default
-	 *
-	 * @return array
-	 */
-	public function get_option( $option, $default = '' ) {
-		$settings = $this->get_settings();
-
-		return $settings->get_option( $option, $default );
-	}
 }

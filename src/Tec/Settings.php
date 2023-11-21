@@ -41,10 +41,7 @@ class Settings {
 
 		$this->set_options_prefix( $options_prefix );
 
-		// Remove settings specific to Google Maps
-		add_action( 'admin_init', [ $this, 'remove_settings' ] );
-
-		// Add settings specific to OSM
+		// Add settings specific to the extension
 		add_action( 'admin_init', [ $this, 'add_settings' ] );
 	}
 
@@ -201,18 +198,6 @@ class Settings {
 	}
 
 	/**
-	 * Here is an example of removing settings from Events > Settings > General tab > "Map Settings" section
-	 * that are specific to Google Maps.
-	 */
-	public function remove_settings() {
-		// Remove reCAPTCHA v2 info
-		//$this->settings_helper->remove_field( 'recaptcha-info', 'addons' );
-
-		// Remove reCAPTCHA v2 Secret Key
-		//$this->settings_helper->remove_field( 'recaptchaPrivateKey', 'addons' );
-	}
-
-	/**
 	 * Adds a new section of fields to Events > Settings > General tab, appearing after the "Map Settings" section
 	 * and before the "Miscellaneous Settings" section.
 	 */
@@ -229,7 +214,7 @@ class Settings {
 				'validation_type' => 'html',
 				'default'         => '',
 				'can_be_empty'    => true,
-				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,  // We're using the Community Events entry, instead of the default TEC.
 				'size'            => 'large',
 			],
 		];
@@ -263,7 +248,7 @@ class Settings {
 	}
 
 	/**
-	 * Here is an example of getting some HTML for the Settings Header.
+	 * HTML for the Settings Header.
 	 *
 	 * @return string
 	 */
