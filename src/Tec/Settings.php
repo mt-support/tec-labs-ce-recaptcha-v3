@@ -206,10 +206,10 @@ class Settings {
 	 */
 	public function remove_settings() {
 		// Remove reCAPTCHA v2 info
-		$this->settings_helper->remove_field( 'recaptcha-info', 'addons' );
+		//$this->settings_helper->remove_field( 'recaptcha-info', 'addons' );
 
 		// Remove reCAPTCHA v2 Secret Key
-		$this->settings_helper->remove_field( 'recaptchaPrivateKey', 'addons' );
+		//$this->settings_helper->remove_field( 'recaptchaPrivateKey', 'addons' );
 	}
 
 	/**
@@ -222,13 +222,23 @@ class Settings {
 				'type' => 'html',
 				'html' => $this->recaptcha_v3_settings_intro_text(),
 			],
+			'site_key' => [ // TODO: Change setting.
+				'type'            => 'text',
+				'label'           => esc_html__( 'Site Key', 'tec-labs-ce-recaptcha-v3' ),
+				'tooltip'         => sprintf( esc_html__( 'Get your Site Key at %s.', 'tec-labs-ce-recaptcha-v3' ), '<a href="https://www.Google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>' ),
+				'validation_type' => 'html',
+				'default'         => '',
+				'can_be_empty'    => true,
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,
+				'size'            => 'large',
+			],
 		];
 
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
 			'addons',
-			'recaptchaPublicKey',
-			true
+			'google_maps_js_api_key',
+			false
 		);
 	}
 
@@ -258,7 +268,8 @@ class Settings {
 	 * @return string
 	 */
 	private function recaptcha_v3_settings_intro_text() {
-		$result = '<div style="margin-left: 20px;">';
+		$result = '<h3>' . esc_html_x( 'reCAPTCHA v3 API Key', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
+		$result .= '<div style="margin-left: 20px;">';
 		$result .= '<p>';
 		$result .= esc_html_x( 'Provide reCAPTCHA v3 API key to enable reCAPTCHA on your Community Events form.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
 		$result .= '</p>';
