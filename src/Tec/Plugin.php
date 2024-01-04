@@ -125,7 +125,7 @@ class Plugin extends Service_Provider {
 		$option_key = $this->get_options_prefix() . '_site_key';
 		$recaptcha_key = $ce_options[ $option_key ];
 
-		if ( $recaptcha_key != '' ) {
+		if ( $recaptcha_key !== '' ) {
 			// Template override for the main templates (in src/views/community).
 			add_filter( 'tribe_events_template_paths', [ $this, 'template_base_paths' ] );
 
