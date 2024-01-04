@@ -12,8 +12,6 @@ use Tribe__Settings_Manager;
 
 /**
  * Do the Settings.
- *
- * TODO: Delete file if not using settings
  */
 class Settings {
 
@@ -36,8 +34,6 @@ class Settings {
 	/**
 	 * Settings constructor.
 	 *
-	 * TODO: Update this entire class for your needs, or remove the entire `src` directory this file is in and do not load it in the main plugin file.
-	 *
 	 * @param string $options_prefix Recommended: the plugin text domain, with hyphens converted to underscores.
 	 */
 	public function __construct( $options_prefix ) {
@@ -45,10 +41,7 @@ class Settings {
 
 		$this->set_options_prefix( $options_prefix );
 
-		// Remove settings specific to Google Maps
-		add_action( 'admin_init', [ $this, 'remove_settings' ] );
-
-		// Add settings specific to OSM
+		// Add settings specific to the extension
 		add_action( 'admin_init', [ $this, 'add_settings' ] );
 	}
 
@@ -205,49 +198,46 @@ class Settings {
 	}
 
 	/**
-	 * Here is an example of removing settings from Events > Settings > General tab > "Map Settings" section
-	 * that are specific to Google Maps.
-	 *
-	 * TODO: Remove this method and the corresponding hook in `__construct()` if you don't want to remove any settings.
-	 */
-	public function remove_settings() {
-		// Remove "Enable Google Maps" checkbox
-		$this->settings_helper->remove_field( 'embedGoogleMaps', 'general' );
-
-		// Remove "Map view search distance limit" (default of 25)
-		$this->settings_helper->remove_field( 'geoloc_default_geofence', 'general' );
-
-		// Remove "Google Maps default zoom level" (0-21, default of 10)
-		$this->settings_helper->remove_field( 'embedGoogleMapsZoom', 'general' );
-	}
-
-	/**
 	 * Adds a new section of fields to Events > Settings > General tab, appearing after the "Map Settings" section
 	 * and before the "Miscellaneous Settings" section.
-	 *
-	 * TODO: Move the setting to where you want and update this docblock. If you like it here, just delete this TODO.
 	 */
 	public function add_settings() {
 		$fields = [
-			// TODO: Settings heading start. Remove this element if not needed. Also remove the corresponding `get_example_intro_text()` method below.
-			'Example'   => [
+			'Intro'   => [
 				'type' => 'html',
-				'html' => $this->get_example_intro_text(),
+				'html' => $this->recaptcha_v3_settings_intro_text(),
 			],
-			// TODO: Settings heading end.
-			'a_setting' => [ // TODO: Change setting.
+			'site_key' => [ // TODO: Change setting.
 				'type'            => 'text',
-				'label'           => esc_html__( 'Example setting', 'tec-labs-ce-recaptcha-v3' ),
-				'tooltip'         => sprintf( esc_html__( 'Example setting description. Enter your custom URL, including "http://" or "https://", for example %s.', 'tec-labs-ce-recaptcha-v3' ), '<code>https://demo.theeventscalendar.com/</code>' ),
+				'label'           => esc_html__( 'Site Key', 'tec-labs-ce-recaptcha-v3' ),
+				'tooltip'         => sprintf( esc_html__( 'Get your Site Key at %s.', 'tec-labs-ce-recaptcha-v3' ), '<a href="https://www.Google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>' ),
 				'validation_type' => 'html',
+				'default'         => '',
+				'can_be_empty'    => true,
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,  // We're using the Community Events entry, instead of the default TEC.
+				'size'            => 'large',
 			],
+			'theme' => [
+				'type'            => 'dropdown',
+				'label'           => esc_html__( 'Theme', 'tec-labs-ce-recaptcha-v3' ),
+				'tooltip'         => esc_html__( 'The color theme of the widget.', 'tec-labs-ce-recaptcha-v3' ),
+				'default'         => 'light',
+				'validation_type' => 'options',
+				'size'            => 'small',
+				'parent_option'   => \Tribe__Events__Community__Main::OPTIONNAME,  // We're using the Community Events entry, instead of the default TEC.
+				'options'         => [
+					'light' => esc_html__( 'Light', 'tec-labs-ce-recaptcha-v3' ),
+					'dark'  => esc_html__( 'Dark', 'tec-labs-ce-recaptcha-v3' ),
+				],
+			],
+
 		];
 
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
-			'general',
-			'tribeEventsMiscellaneousTitle',
-			true
+			'addons',
+			'google_maps_js_api_key',
+			false
 		);
 	}
 
@@ -272,17 +262,15 @@ class Settings {
 	}
 
 	/**
-	 * Here is an example of getting some HTML for the Settings Header.
-	 *
-	 * TODO: Delete this method if you do not need a heading for your settings. Also remove the corresponding element in the the $fields array in the `add_settings()` method above.
+	 * HTML for the Settings Header.
 	 *
 	 * @return string
 	 */
-	private function get_example_intro_text() {
-		$result = '<h3>' . esc_html_x( 'Example Extension Setup', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
+	private function recaptcha_v3_settings_intro_text() {
+		$result = '<h3>' . esc_html_x( 'reCAPTCHA v3 API Key', 'Settings header', 'tec-labs-ce-recaptcha-v3' ) . '</h3>';
 		$result .= '<div style="margin-left: 20px;">';
 		$result .= '<p>';
-		$result .= esc_html_x( 'Some text here about this settings section.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
+		$result .= esc_html_x( 'Provide reCAPTCHA v3 API key to enable reCAPTCHA on your Community Events form.', 'Setting section description', 'tec-labs-ce-recaptcha-v3' );
 		$result .= '</p>';
 		$result .= '</div>';
 

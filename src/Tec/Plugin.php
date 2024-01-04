@@ -70,13 +70,11 @@ class Plugin extends Service_Provider {
 	 * @since 1.0.0
 	 *
 	 * @var Settings
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private $settings;
 
 	/**
-	 * Setup the Extension's properties.
+	 * Set up the Extension's properties.
 	 *
 	 * This always executes even if the required plugins are not present.
 	 *
@@ -100,17 +98,106 @@ class Plugin extends Service_Provider {
 		}
 
 		// Do the settings.
-		// TODO: Remove if not using settings
 		$this->get_settings();
 
 		// Start binds.
 
+		// Remove reCAPTCHA v2
+		add_filter( 'tribe_community_events_captcha_plugin', '__return_null' );
 
+		$this->maybe_do_recaptcha_v3();
 
 		// End binds.
 
 		$this->container->register( Hooks::class );
 		$this->container->register( Assets::class );
+	}
+
+	/**
+	 * Replace reCAPTCHA v2 with v3 if there is a license key set.
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0
+	 */
+	function maybe_do_recaptcha_v3() {
+		$ce_options = \Tribe__Events__Community__Main::getOptions();
+		$option_key = $this->get_options_prefix() . '_site_key';
+		$recaptcha_key = $ce_options[ $option_key ];
+
+		if ( $recaptcha_key !== '' ) {
+			// Template override for the main templates (in src/views/community).
+			add_filter( 'tribe_events_template_paths', [ $this, 'template_base_paths' ] );
+
+			// Template override for module templates (under src/views/community).
+			add_filter( 'tribe_get_template_part_path', [ $this, 'custom_templates' ], 10, 4 );
+
+			// Add scripts needed for v3.
+			add_action( 'wp_head', [ $this, 'add_recaptcha_scripts' ] );
+		}
+	}
+
+	/**
+	 * Add template override location for the main template files.
+	 * (Files in src/views/community.)
+	 *
+	 * @param array $paths The template paths.
+	 *
+	 * @return array The new template paths.
+	 *
+	 * @since 1.0.0
+	 */
+	function template_base_paths( array $paths ): array {
+		$slug = "tec-labs-" . PUE::get_slug();
+		$paths[ $slug ] = trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) );
+
+		return $paths;
+	}
+
+	/**
+	 * Add template override location for template parts.
+	 * (Files under src/views/community.)
+	 *
+	 * @param string $file The template file name with full server path.
+	 * @param string $template The template file name with the default override path. (E.g. community/modules/template.php)
+	 * @param string $slug The template slug. (Same as file name but without extension.)
+	 * @param string|null $name
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	function custom_templates( string $file, string $template, string $slug, ?string $name ): string {
+		$custom_folder = "src/views";
+
+		$plugin_path = implode( "", array_merge(
+			(array) trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) ),
+			(array) $custom_folder,
+		) );
+
+		$new_file = $plugin_path . "/" . $template;
+
+		if ( file_exists( $new_file ) ) {
+			return $new_file;
+		}
+
+		return $file;
+	}
+
+	/**
+	 * Add recaptcha scripts to the head.
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see https://developers.google.com/recaptcha/docs/v3
+	 */
+	function add_recaptcha_scripts() {
+		if ( tribe_context()->get('view') == "community_event_page" ) {
+			echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+			echo '<script>function onSubmit(token) { document.getElementById("tec_ce_submission_form").submit(); }</script>';
+		}
 	}
 
 	/**
@@ -147,8 +234,6 @@ class Plugin extends Service_Provider {
 	 * @return string
      *
 	 * @see \Tribe\Extensions\CeRecaptchaV3\Settings::set_options_prefix()
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private function get_options_prefix() {
 		return (string) str_replace( '-', '_', 'tec-labs-ce-recaptcha-v3' );
@@ -158,8 +243,6 @@ class Plugin extends Service_Provider {
 	 * Get Settings instance.
 	 *
 	 * @return Settings
-	 *
-	 * TODO: Remove if not using settings
 	 */
 	private function get_settings() {
 		if ( empty( $this->settings ) ) {
@@ -169,32 +252,4 @@ class Plugin extends Service_Provider {
 		return $this->settings;
 	}
 
-	/**
-	 * Get all of this extension's options.
-	 *
-	 * @return array
-	 *
-	 * TODO: Remove if not using settings
-	 */
-	public function get_all_options() {
-		$settings = $this->get_settings();
-
-		return $settings->get_all_options();
-	}
-
-	/**
-	 * Get a specific extension option.
-	 *
-	 * @param $option
-	 * @param string $default
-	 *
-	 * @return array
-	 *
-	 * TODO: Remove if not using settings
-	 */
-	public function get_option( $option, $default = '' ) {
-		$settings = $this->get_settings();
-
-		return $settings->get_option( $option, $default );
-	}
 }
