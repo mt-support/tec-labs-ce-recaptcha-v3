@@ -123,7 +123,7 @@ class Plugin extends Service_Provider {
 	function maybe_do_recaptcha_v3() {
 		$ce_options = \Tribe__Events__Community__Main::getOptions();
 		$option_key = $this->get_options_prefix() . '_site_key';
-		$recaptcha_key = $ce_options[$option_key];
+		$recaptcha_key = $ce_options[ $option_key ];
 
 		if ( $recaptcha_key != '' ) {
 			// Template override for the main templates (in src/views/community).
