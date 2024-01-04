@@ -103,7 +103,7 @@ class Plugin extends Service_Provider {
 		// Start binds.
 
 		// Remove reCAPTCHA v2
-		add_filter('tribe_community_events_captcha_plugin', '__return_null' );
+		add_filter( 'tribe_community_events_captcha_plugin', '__return_null' );
 
 		$this->maybe_do_recaptcha_v3();
 
