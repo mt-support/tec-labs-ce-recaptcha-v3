@@ -149,7 +149,7 @@ class Plugin extends Service_Provider {
 	 */
 	function template_base_paths( array $paths ): array {
 		$slug = "tec-labs-" . PUE::get_slug();
-		$paths[$slug] = trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) );
+		$paths[ $slug ] = trailingslashit( plugin_dir_path( TRIBE_EXTENSION_CE_RECAPTCHA_V3_FILE ) );
 
 		return $paths;
 	}
